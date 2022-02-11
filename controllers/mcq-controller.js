@@ -6,7 +6,7 @@ class McqController {
 
     findMcqs = async (req, res, next) => {
         const result = await mcqService.findMcqs();
-        if (!result)
+        if (!result || result.length < 1)
             return next(ErrorHandler.notFound('No MCQ Found'));
         const data = result.map((x) => new McqDto(x));
         res.json({ success: true, message: "MCQ Found", data });
