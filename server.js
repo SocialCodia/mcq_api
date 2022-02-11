@@ -7,7 +7,7 @@ const cors = require('cors');
 const app = express();
 
 const corsOption = {
-    origin: ['http://localhost:3000', 'https://online-mcq.vercel.app/'],
+    origin: ['http://localhost:3000', 'https://online-mcq.vercel.app', 'http://online-mcq.vercel.app'],
     credentials: true
 }
 
