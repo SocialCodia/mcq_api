@@ -3,8 +3,15 @@ const PORT = process.env.PORT || 5500;
 const dbConnection = require('./configs/db-config');
 const publicRoute = require('./routes/public-route');
 const errorMiddleware = require('./middlewares/error-middleware');
-
+const cors = require('cors');
 const app = express();
+
+const corsOption = {
+    origin: '*',
+    credentials: true
+}
+
+app.use(cors(corsOption));
 
 app.use(express.json());
 
