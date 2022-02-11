@@ -1,1 +1,22 @@
 const express = require('express');
+const PORT = process.env.PORT || 5500;
+const dbConnection = require('./configs/db-config');
+const publicRoute = require('./routes/public-route');
+const errorMiddleware = require('./middlewares/error-middleware');
+
+const app = express();
+
+app.use(express.json());
+
+app.use('/api/public', publicRoute);
+
+
+app.use((req, res, next) => {
+    return res.status(404).json({ success: false, message: 'Resource Not Found' });
+})
+
+app.use(errorMiddleware);
+
+
+
+app.listen(PORT, () => console.log(`Listining On Port ${PORT}`));
