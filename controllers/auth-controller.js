@@ -33,11 +33,11 @@ class AuthController {
         }
         const { accessToken } = tokenService.generateToken(payload);
         res.cookie('accessToken', accessToken, {
-            maxAge: 1000 * 60 * 60 * 24 * 30
+            maxAge: 1000 * 60 * 60 * 24 * 30,
         });
-
+        res.setHeader('SameSite', 'None');
         const data = new UserDto(user);
-        data.accessToken = accessToken; 
+        data.accessToken = accessToken;
         res.json({ success: true, message: 'Login Successfull', data });
     }
 }
