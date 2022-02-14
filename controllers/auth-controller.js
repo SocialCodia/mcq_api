@@ -34,7 +34,8 @@ class AuthController {
         const { accessToken } = tokenService.generateToken(payload);
         res.cookie('accessToken', accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
-            sameSite: 'none'
+            sameSite: 'none',
+            secure:true
         });
         const data = new UserDto(user);
         data.accessToken = accessToken;
