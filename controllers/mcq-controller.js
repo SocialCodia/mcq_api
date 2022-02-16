@@ -14,12 +14,15 @@ class McqController {
     }
 
     createMcq = async (req, res, next) => {
-        const body = await mcqValidation.createMcq.validateAsync(req.body);
-        const { opOne, opTwo, opThree, opFoure } = body;
+        const { question, answer, opOne, opTwo, opThree, opFoure } = req.body;
         if (!opOne && !opTwo && !opThree && !opFoure)
             return next(ErrorHandler.badRequest('Minimum One Answer Is Required'));
-        body.addedBy = req.user.id;
-        const result = await mcqService.createMcq(body)
+        if (!question)
+            return next(ErrorHandler.badRequest('Question Is Required'));
+        if (!answer)
+            return next(ErrorHandler.badRequest('Answer Is Required'));
+        req.body.addedBy = req.user.id;
+        const result = await mcqService.createMcq(req.body)
         if (!result)
             return next(ErrorHandler.serverError('Failed To Add This MCQ'));
         res.json({ success: true, message: 'MCQ Added' });
