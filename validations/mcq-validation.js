@@ -8,7 +8,7 @@ class McqValidation {
         opTwo: Joi.string().optional(),
         opThree: Joi.string().optional(),
         opFour: Joi.string().optional(),
-        answer: Joi.number().min(1).max(2).default(1),
+        answer: Joi.number().min(1).max(4).default(1),
         verified: Joi.bool().default(true)
     });
 
