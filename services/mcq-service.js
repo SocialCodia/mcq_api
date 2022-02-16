@@ -4,7 +4,7 @@ class McqService {
 
     createMcq = async data => McqModel.create(data);
 
-    findMcqs = async filter => McqModel.find(filter);
+    findMcqs = async filter => McqModel.find(filter).populate({ path: 'addedBy' });
 
 }
 

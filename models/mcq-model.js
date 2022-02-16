@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const mcqSchema = new Schema({
-
+    addedBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     question: {
         type: String,
         minlength: 3,
@@ -29,6 +32,10 @@ const mcqSchema = new Schema({
         type: Number,
         min: 1,
         max: 4,
+        required: true
+    },
+    verified: {
+        type: Boolean,
         required: true
     }
 }, {

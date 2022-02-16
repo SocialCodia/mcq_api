@@ -1,6 +1,7 @@
 const mcqService = require('../services/mcq-service');
 const ErrorHandler = require('../utils/error-handler');
 const McqDto = require('../dtos/mcq-dto');
+const mcqValidation = require('../validations/mcq-validation');
 
 class McqController {
 
@@ -13,14 +14,12 @@ class McqController {
     }
 
     createMcq = async (req, res, next) => {
-        const { question, opOne, opTwo, opThree, opFoure, answer } = req.body;
-        if (!question)
-            return next(ErrorHandler.badRequest('Question Is Required'));
+        const body = await mcqValidation.createMcq.validateAsync(req.body);
+        const { opOne, opTwo, opThree, opFoure } = body;
         if (!opOne && !opTwo && !opThree && !opFoure)
             return next(ErrorHandler.badRequest('Minimum One Answer Is Required'));
-        if (!answer)
-            return next(ErrorHandler.badRequest('Answer Is Required'));
-        const result = await mcqService.createMcq(req.body)
+        body.addedBy = req.user.id;
+        const result = await mcqService.createMcq(body)
         if (!result)
             return next(ErrorHandler.serverError('Failed To Add This MCQ'));
         res.json({ success: true, message: 'MCQ Added' });
