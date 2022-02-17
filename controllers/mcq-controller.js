@@ -22,6 +22,9 @@ class McqController {
         if (!answer)
             return next(ErrorHandler.badRequest('Answer Is Required'));
         req.body.addedBy = req.user.id;
+        const preMcq = await mcqService.findMcq({ question: req.body.question.trim()});
+        if (preMcq)
+            await mcqService.updateMcq({ _id: preMcq._id }, { verified: false });
         const result = await mcqService.createMcq(req.body)
         if (!result)
             return next(ErrorHandler.serverError('Failed To Add This MCQ'));
